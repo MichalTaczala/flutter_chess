@@ -1,8 +1,12 @@
 part of 'chess_board_bloc.dart';
 
-@immutable
-abstract class ChessBoardState {
+@freezed
+class ChessBoardState with _$ChessBoardState {
   const factory ChessBoardState({
-    int? abc,
+    @Default([]) List<Figure> figuresOnBoard,
+    @Default([]) List<Figure> figuresTaken,
+    @Default(true) bool isWhitePlayerTurn,
+    @Default([]) List<int> availableFieldsToMove,
+    int? currentlyClickedField,
   }) = _ChessBoardState;
 }

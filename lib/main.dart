@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chess/chess_page.dart';
+import 'package:flutter_chess/pages/chess_page.dart';
 
 void main() {
   runApp(const MainApp());
