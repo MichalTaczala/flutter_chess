@@ -19,19 +19,22 @@ mixin _$ChessBoardEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
-    required TResult Function(Figure figure) getAvailableFieldsToMove,
+    required TResult Function(Figure? figure) getAvailableFieldsToMove,
+    required TResult Function(Figure figure, int newPosition) moveFigure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialize,
-    TResult? Function(Figure figure)? getAvailableFieldsToMove,
+    TResult? Function(Figure? figure)? getAvailableFieldsToMove,
+    TResult? Function(Figure figure, int newPosition)? moveFigure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
-    TResult Function(Figure figure)? getAvailableFieldsToMove,
+    TResult Function(Figure? figure)? getAvailableFieldsToMove,
+    TResult Function(Figure figure, int newPosition)? moveFigure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -40,6 +43,7 @@ mixin _$ChessBoardEvent {
     required TResult Function(_Initialize value) initialize,
     required TResult Function(_GetAvailableFieldsToMove value)
         getAvailableFieldsToMove,
+    required TResult Function(_MoveFigure value) moveFigure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,12 +51,14 @@ mixin _$ChessBoardEvent {
     TResult? Function(_Initialize value)? initialize,
     TResult? Function(_GetAvailableFieldsToMove value)?
         getAvailableFieldsToMove,
+    TResult? Function(_MoveFigure value)? moveFigure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initialize value)? initialize,
     TResult Function(_GetAvailableFieldsToMove value)? getAvailableFieldsToMove,
+    TResult Function(_MoveFigure value)? moveFigure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -115,7 +121,8 @@ class _$_Initialize implements _Initialize {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
-    required TResult Function(Figure figure) getAvailableFieldsToMove,
+    required TResult Function(Figure? figure) getAvailableFieldsToMove,
+    required TResult Function(Figure figure, int newPosition) moveFigure,
   }) {
     return initialize();
   }
@@ -124,7 +131,8 @@ class _$_Initialize implements _Initialize {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialize,
-    TResult? Function(Figure figure)? getAvailableFieldsToMove,
+    TResult? Function(Figure? figure)? getAvailableFieldsToMove,
+    TResult? Function(Figure figure, int newPosition)? moveFigure,
   }) {
     return initialize?.call();
   }
@@ -133,7 +141,8 @@ class _$_Initialize implements _Initialize {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
-    TResult Function(Figure figure)? getAvailableFieldsToMove,
+    TResult Function(Figure? figure)? getAvailableFieldsToMove,
+    TResult Function(Figure figure, int newPosition)? moveFigure,
     required TResult orElse(),
   }) {
     if (initialize != null) {
@@ -148,6 +157,7 @@ class _$_Initialize implements _Initialize {
     required TResult Function(_Initialize value) initialize,
     required TResult Function(_GetAvailableFieldsToMove value)
         getAvailableFieldsToMove,
+    required TResult Function(_MoveFigure value) moveFigure,
   }) {
     return initialize(this);
   }
@@ -158,6 +168,7 @@ class _$_Initialize implements _Initialize {
     TResult? Function(_Initialize value)? initialize,
     TResult? Function(_GetAvailableFieldsToMove value)?
         getAvailableFieldsToMove,
+    TResult? Function(_MoveFigure value)? moveFigure,
   }) {
     return initialize?.call(this);
   }
@@ -167,6 +178,7 @@ class _$_Initialize implements _Initialize {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initialize value)? initialize,
     TResult Function(_GetAvailableFieldsToMove value)? getAvailableFieldsToMove,
+    TResult Function(_MoveFigure value)? moveFigure,
     required TResult orElse(),
   }) {
     if (initialize != null) {
@@ -187,9 +199,9 @@ abstract class _$$_GetAvailableFieldsToMoveCopyWith<$Res> {
           $Res Function(_$_GetAvailableFieldsToMove) then) =
       __$$_GetAvailableFieldsToMoveCopyWithImpl<$Res>;
   @useResult
-  $Res call({Figure figure});
+  $Res call({Figure? figure});
 
-  $FigureCopyWith<$Res> get figure;
+  $FigureCopyWith<$Res>? get figure;
 }
 
 /// @nodoc
@@ -203,20 +215,24 @@ class __$$_GetAvailableFieldsToMoveCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? figure = null,
+    Object? figure = freezed,
   }) {
     return _then(_$_GetAvailableFieldsToMove(
-      null == figure
+      freezed == figure
           ? _value.figure
           : figure // ignore: cast_nullable_to_non_nullable
-              as Figure,
+              as Figure?,
     ));
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $FigureCopyWith<$Res> get figure {
-    return $FigureCopyWith<$Res>(_value.figure, (value) {
+  $FigureCopyWith<$Res>? get figure {
+    if (_value.figure == null) {
+      return null;
+    }
+
+    return $FigureCopyWith<$Res>(_value.figure!, (value) {
       return _then(_value.copyWith(figure: value));
     });
   }
@@ -228,7 +244,7 @@ class _$_GetAvailableFieldsToMove implements _GetAvailableFieldsToMove {
   const _$_GetAvailableFieldsToMove(this.figure);
 
   @override
-  final Figure figure;
+  final Figure? figure;
 
   @override
   String toString() {
@@ -257,7 +273,8 @@ class _$_GetAvailableFieldsToMove implements _GetAvailableFieldsToMove {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
-    required TResult Function(Figure figure) getAvailableFieldsToMove,
+    required TResult Function(Figure? figure) getAvailableFieldsToMove,
+    required TResult Function(Figure figure, int newPosition) moveFigure,
   }) {
     return getAvailableFieldsToMove(figure);
   }
@@ -266,7 +283,8 @@ class _$_GetAvailableFieldsToMove implements _GetAvailableFieldsToMove {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialize,
-    TResult? Function(Figure figure)? getAvailableFieldsToMove,
+    TResult? Function(Figure? figure)? getAvailableFieldsToMove,
+    TResult? Function(Figure figure, int newPosition)? moveFigure,
   }) {
     return getAvailableFieldsToMove?.call(figure);
   }
@@ -275,7 +293,8 @@ class _$_GetAvailableFieldsToMove implements _GetAvailableFieldsToMove {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
-    TResult Function(Figure figure)? getAvailableFieldsToMove,
+    TResult Function(Figure? figure)? getAvailableFieldsToMove,
+    TResult Function(Figure figure, int newPosition)? moveFigure,
     required TResult orElse(),
   }) {
     if (getAvailableFieldsToMove != null) {
@@ -290,6 +309,7 @@ class _$_GetAvailableFieldsToMove implements _GetAvailableFieldsToMove {
     required TResult Function(_Initialize value) initialize,
     required TResult Function(_GetAvailableFieldsToMove value)
         getAvailableFieldsToMove,
+    required TResult Function(_MoveFigure value) moveFigure,
   }) {
     return getAvailableFieldsToMove(this);
   }
@@ -300,6 +320,7 @@ class _$_GetAvailableFieldsToMove implements _GetAvailableFieldsToMove {
     TResult? Function(_Initialize value)? initialize,
     TResult? Function(_GetAvailableFieldsToMove value)?
         getAvailableFieldsToMove,
+    TResult? Function(_MoveFigure value)? moveFigure,
   }) {
     return getAvailableFieldsToMove?.call(this);
   }
@@ -309,6 +330,7 @@ class _$_GetAvailableFieldsToMove implements _GetAvailableFieldsToMove {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initialize value)? initialize,
     TResult Function(_GetAvailableFieldsToMove value)? getAvailableFieldsToMove,
+    TResult Function(_MoveFigure value)? moveFigure,
     required TResult orElse(),
   }) {
     if (getAvailableFieldsToMove != null) {
@@ -319,22 +341,187 @@ class _$_GetAvailableFieldsToMove implements _GetAvailableFieldsToMove {
 }
 
 abstract class _GetAvailableFieldsToMove implements ChessBoardEvent {
-  const factory _GetAvailableFieldsToMove(final Figure figure) =
+  const factory _GetAvailableFieldsToMove(final Figure? figure) =
       _$_GetAvailableFieldsToMove;
 
-  Figure get figure;
+  Figure? get figure;
   @JsonKey(ignore: true)
   _$$_GetAvailableFieldsToMoveCopyWith<_$_GetAvailableFieldsToMove>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
+abstract class _$$_MoveFigureCopyWith<$Res> {
+  factory _$$_MoveFigureCopyWith(
+          _$_MoveFigure value, $Res Function(_$_MoveFigure) then) =
+      __$$_MoveFigureCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Figure figure, int newPosition});
+
+  $FigureCopyWith<$Res> get figure;
+}
+
+/// @nodoc
+class __$$_MoveFigureCopyWithImpl<$Res>
+    extends _$ChessBoardEventCopyWithImpl<$Res, _$_MoveFigure>
+    implements _$$_MoveFigureCopyWith<$Res> {
+  __$$_MoveFigureCopyWithImpl(
+      _$_MoveFigure _value, $Res Function(_$_MoveFigure) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? figure = null,
+    Object? newPosition = null,
+  }) {
+    return _then(_$_MoveFigure(
+      null == figure
+          ? _value.figure
+          : figure // ignore: cast_nullable_to_non_nullable
+              as Figure,
+      null == newPosition
+          ? _value.newPosition
+          : newPosition // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $FigureCopyWith<$Res> get figure {
+    return $FigureCopyWith<$Res>(_value.figure, (value) {
+      return _then(_value.copyWith(figure: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$_MoveFigure implements _MoveFigure {
+  const _$_MoveFigure(this.figure, this.newPosition);
+
+  @override
+  final Figure figure;
+  @override
+  final int newPosition;
+
+  @override
+  String toString() {
+    return 'ChessBoardEvent.moveFigure(figure: $figure, newPosition: $newPosition)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_MoveFigure &&
+            (identical(other.figure, figure) || other.figure == figure) &&
+            (identical(other.newPosition, newPosition) ||
+                other.newPosition == newPosition));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, figure, newPosition);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_MoveFigureCopyWith<_$_MoveFigure> get copyWith =>
+      __$$_MoveFigureCopyWithImpl<_$_MoveFigure>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialize,
+    required TResult Function(Figure? figure) getAvailableFieldsToMove,
+    required TResult Function(Figure figure, int newPosition) moveFigure,
+  }) {
+    return moveFigure(figure, newPosition);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialize,
+    TResult? Function(Figure? figure)? getAvailableFieldsToMove,
+    TResult? Function(Figure figure, int newPosition)? moveFigure,
+  }) {
+    return moveFigure?.call(figure, newPosition);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialize,
+    TResult Function(Figure? figure)? getAvailableFieldsToMove,
+    TResult Function(Figure figure, int newPosition)? moveFigure,
+    required TResult orElse(),
+  }) {
+    if (moveFigure != null) {
+      return moveFigure(figure, newPosition);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialize value) initialize,
+    required TResult Function(_GetAvailableFieldsToMove value)
+        getAvailableFieldsToMove,
+    required TResult Function(_MoveFigure value) moveFigure,
+  }) {
+    return moveFigure(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initialize value)? initialize,
+    TResult? Function(_GetAvailableFieldsToMove value)?
+        getAvailableFieldsToMove,
+    TResult? Function(_MoveFigure value)? moveFigure,
+  }) {
+    return moveFigure?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_GetAvailableFieldsToMove value)? getAvailableFieldsToMove,
+    TResult Function(_MoveFigure value)? moveFigure,
+    required TResult orElse(),
+  }) {
+    if (moveFigure != null) {
+      return moveFigure(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _MoveFigure implements ChessBoardEvent {
+  const factory _MoveFigure(final Figure figure, final int newPosition) =
+      _$_MoveFigure;
+
+  Figure get figure;
+  int get newPosition;
+  @JsonKey(ignore: true)
+  _$$_MoveFigureCopyWith<_$_MoveFigure> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$ChessBoardState {
+  StateEnum get gameState => throw _privateConstructorUsedError;
   List<Figure> get figuresOnBoard => throw _privateConstructorUsedError;
   List<Figure> get figuresTaken => throw _privateConstructorUsedError;
   bool get isWhitePlayerTurn => throw _privateConstructorUsedError;
   List<int> get availableFieldsToMove => throw _privateConstructorUsedError;
-  int? get currentlyClickedField => throw _privateConstructorUsedError;
+  List<int> get fieldsWithFiguresAvailableToTake =>
+      throw _privateConstructorUsedError;
+  Figure? get currentlyClickedFigure => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChessBoardStateCopyWith<ChessBoardState> get copyWith =>
@@ -348,11 +535,15 @@ abstract class $ChessBoardStateCopyWith<$Res> {
       _$ChessBoardStateCopyWithImpl<$Res, ChessBoardState>;
   @useResult
   $Res call(
-      {List<Figure> figuresOnBoard,
+      {StateEnum gameState,
+      List<Figure> figuresOnBoard,
       List<Figure> figuresTaken,
       bool isWhitePlayerTurn,
       List<int> availableFieldsToMove,
-      int? currentlyClickedField});
+      List<int> fieldsWithFiguresAvailableToTake,
+      Figure? currentlyClickedFigure});
+
+  $FigureCopyWith<$Res>? get currentlyClickedFigure;
 }
 
 /// @nodoc
@@ -368,13 +559,19 @@ class _$ChessBoardStateCopyWithImpl<$Res, $Val extends ChessBoardState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? gameState = null,
     Object? figuresOnBoard = null,
     Object? figuresTaken = null,
     Object? isWhitePlayerTurn = null,
     Object? availableFieldsToMove = null,
-    Object? currentlyClickedField = freezed,
+    Object? fieldsWithFiguresAvailableToTake = null,
+    Object? currentlyClickedFigure = freezed,
   }) {
     return _then(_value.copyWith(
+      gameState: null == gameState
+          ? _value.gameState
+          : gameState // ignore: cast_nullable_to_non_nullable
+              as StateEnum,
       figuresOnBoard: null == figuresOnBoard
           ? _value.figuresOnBoard
           : figuresOnBoard // ignore: cast_nullable_to_non_nullable
@@ -391,11 +588,27 @@ class _$ChessBoardStateCopyWithImpl<$Res, $Val extends ChessBoardState>
           ? _value.availableFieldsToMove
           : availableFieldsToMove // ignore: cast_nullable_to_non_nullable
               as List<int>,
-      currentlyClickedField: freezed == currentlyClickedField
-          ? _value.currentlyClickedField
-          : currentlyClickedField // ignore: cast_nullable_to_non_nullable
-              as int?,
+      fieldsWithFiguresAvailableToTake: null == fieldsWithFiguresAvailableToTake
+          ? _value.fieldsWithFiguresAvailableToTake
+          : fieldsWithFiguresAvailableToTake // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+      currentlyClickedFigure: freezed == currentlyClickedFigure
+          ? _value.currentlyClickedFigure
+          : currentlyClickedFigure // ignore: cast_nullable_to_non_nullable
+              as Figure?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $FigureCopyWith<$Res>? get currentlyClickedFigure {
+    if (_value.currentlyClickedFigure == null) {
+      return null;
+    }
+
+    return $FigureCopyWith<$Res>(_value.currentlyClickedFigure!, (value) {
+      return _then(_value.copyWith(currentlyClickedFigure: value) as $Val);
+    });
   }
 }
 
@@ -408,11 +621,16 @@ abstract class _$$_ChessBoardStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<Figure> figuresOnBoard,
+      {StateEnum gameState,
+      List<Figure> figuresOnBoard,
       List<Figure> figuresTaken,
       bool isWhitePlayerTurn,
       List<int> availableFieldsToMove,
-      int? currentlyClickedField});
+      List<int> fieldsWithFiguresAvailableToTake,
+      Figure? currentlyClickedFigure});
+
+  @override
+  $FigureCopyWith<$Res>? get currentlyClickedFigure;
 }
 
 /// @nodoc
@@ -426,13 +644,19 @@ class __$$_ChessBoardStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? gameState = null,
     Object? figuresOnBoard = null,
     Object? figuresTaken = null,
     Object? isWhitePlayerTurn = null,
     Object? availableFieldsToMove = null,
-    Object? currentlyClickedField = freezed,
+    Object? fieldsWithFiguresAvailableToTake = null,
+    Object? currentlyClickedFigure = freezed,
   }) {
     return _then(_$_ChessBoardState(
+      gameState: null == gameState
+          ? _value.gameState
+          : gameState // ignore: cast_nullable_to_non_nullable
+              as StateEnum,
       figuresOnBoard: null == figuresOnBoard
           ? _value._figuresOnBoard
           : figuresOnBoard // ignore: cast_nullable_to_non_nullable
@@ -449,10 +673,14 @@ class __$$_ChessBoardStateCopyWithImpl<$Res>
           ? _value._availableFieldsToMove
           : availableFieldsToMove // ignore: cast_nullable_to_non_nullable
               as List<int>,
-      currentlyClickedField: freezed == currentlyClickedField
-          ? _value.currentlyClickedField
-          : currentlyClickedField // ignore: cast_nullable_to_non_nullable
-              as int?,
+      fieldsWithFiguresAvailableToTake: null == fieldsWithFiguresAvailableToTake
+          ? _value._fieldsWithFiguresAvailableToTake
+          : fieldsWithFiguresAvailableToTake // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+      currentlyClickedFigure: freezed == currentlyClickedFigure
+          ? _value.currentlyClickedFigure
+          : currentlyClickedFigure // ignore: cast_nullable_to_non_nullable
+              as Figure?,
     ));
   }
 }
@@ -461,15 +689,21 @@ class __$$_ChessBoardStateCopyWithImpl<$Res>
 
 class _$_ChessBoardState implements _ChessBoardState {
   const _$_ChessBoardState(
-      {final List<Figure> figuresOnBoard = const [],
+      {this.gameState = StateEnum.nothingClicked,
+      final List<Figure> figuresOnBoard = const [],
       final List<Figure> figuresTaken = const [],
       this.isWhitePlayerTurn = true,
       final List<int> availableFieldsToMove = const [],
-      this.currentlyClickedField})
+      final List<int> fieldsWithFiguresAvailableToTake = const [],
+      this.currentlyClickedFigure})
       : _figuresOnBoard = figuresOnBoard,
         _figuresTaken = figuresTaken,
-        _availableFieldsToMove = availableFieldsToMove;
+        _availableFieldsToMove = availableFieldsToMove,
+        _fieldsWithFiguresAvailableToTake = fieldsWithFiguresAvailableToTake;
 
+  @override
+  @JsonKey()
+  final StateEnum gameState;
   final List<Figure> _figuresOnBoard;
   @override
   @JsonKey()
@@ -501,12 +735,22 @@ class _$_ChessBoardState implements _ChessBoardState {
     return EqualUnmodifiableListView(_availableFieldsToMove);
   }
 
+  final List<int> _fieldsWithFiguresAvailableToTake;
   @override
-  final int? currentlyClickedField;
+  @JsonKey()
+  List<int> get fieldsWithFiguresAvailableToTake {
+    if (_fieldsWithFiguresAvailableToTake is EqualUnmodifiableListView)
+      return _fieldsWithFiguresAvailableToTake;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_fieldsWithFiguresAvailableToTake);
+  }
+
+  @override
+  final Figure? currentlyClickedFigure;
 
   @override
   String toString() {
-    return 'ChessBoardState(figuresOnBoard: $figuresOnBoard, figuresTaken: $figuresTaken, isWhitePlayerTurn: $isWhitePlayerTurn, availableFieldsToMove: $availableFieldsToMove, currentlyClickedField: $currentlyClickedField)';
+    return 'ChessBoardState(gameState: $gameState, figuresOnBoard: $figuresOnBoard, figuresTaken: $figuresTaken, isWhitePlayerTurn: $isWhitePlayerTurn, availableFieldsToMove: $availableFieldsToMove, fieldsWithFiguresAvailableToTake: $fieldsWithFiguresAvailableToTake, currentlyClickedFigure: $currentlyClickedFigure)';
   }
 
   @override
@@ -514,6 +758,8 @@ class _$_ChessBoardState implements _ChessBoardState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ChessBoardState &&
+            (identical(other.gameState, gameState) ||
+                other.gameState == gameState) &&
             const DeepCollectionEquality()
                 .equals(other._figuresOnBoard, _figuresOnBoard) &&
             const DeepCollectionEquality()
@@ -522,18 +768,23 @@ class _$_ChessBoardState implements _ChessBoardState {
                 other.isWhitePlayerTurn == isWhitePlayerTurn) &&
             const DeepCollectionEquality()
                 .equals(other._availableFieldsToMove, _availableFieldsToMove) &&
-            (identical(other.currentlyClickedField, currentlyClickedField) ||
-                other.currentlyClickedField == currentlyClickedField));
+            const DeepCollectionEquality().equals(
+                other._fieldsWithFiguresAvailableToTake,
+                _fieldsWithFiguresAvailableToTake) &&
+            (identical(other.currentlyClickedFigure, currentlyClickedFigure) ||
+                other.currentlyClickedFigure == currentlyClickedFigure));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      gameState,
       const DeepCollectionEquality().hash(_figuresOnBoard),
       const DeepCollectionEquality().hash(_figuresTaken),
       isWhitePlayerTurn,
       const DeepCollectionEquality().hash(_availableFieldsToMove),
-      currentlyClickedField);
+      const DeepCollectionEquality().hash(_fieldsWithFiguresAvailableToTake),
+      currentlyClickedFigure);
 
   @JsonKey(ignore: true)
   @override
@@ -544,12 +795,16 @@ class _$_ChessBoardState implements _ChessBoardState {
 
 abstract class _ChessBoardState implements ChessBoardState {
   const factory _ChessBoardState(
-      {final List<Figure> figuresOnBoard,
+      {final StateEnum gameState,
+      final List<Figure> figuresOnBoard,
       final List<Figure> figuresTaken,
       final bool isWhitePlayerTurn,
       final List<int> availableFieldsToMove,
-      final int? currentlyClickedField}) = _$_ChessBoardState;
+      final List<int> fieldsWithFiguresAvailableToTake,
+      final Figure? currentlyClickedFigure}) = _$_ChessBoardState;
 
+  @override
+  StateEnum get gameState;
   @override
   List<Figure> get figuresOnBoard;
   @override
@@ -559,7 +814,9 @@ abstract class _ChessBoardState implements ChessBoardState {
   @override
   List<int> get availableFieldsToMove;
   @override
-  int? get currentlyClickedField;
+  List<int> get fieldsWithFiguresAvailableToTake;
+  @override
+  Figure? get currentlyClickedFigure;
   @override
   @JsonKey(ignore: true)
   _$$_ChessBoardStateCopyWith<_$_ChessBoardState> get copyWith =>

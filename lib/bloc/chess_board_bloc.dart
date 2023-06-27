@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_chess/enums/figure_type_enum.dart';
+import 'package:flutter_chess/enums/state_enum.dart';
 import 'package:flutter_chess/models/figure.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -147,57 +148,139 @@ class ChessBoardBloc extends Bloc<ChessBoardEvent, ChessBoardState> {
           ),
         );
       }
-      emit(state.copyWith(figuresOnBoard: allFigures));
-    });
-    on<_GetAvailableFieldsToMove>((event, emit) {
-      List<int> availableFields = [];
-      final figure = event.figure;
-      switch (figure.figureType) {
-        case FigureTypeEnum.pawn:
-          figure.isWhite
-              ? availableFields.addAll([figure.field - 8, figure.field - 16])
-              : availableFields.addAll([figure.field + 8, figure.field + 16]);
-          break;
-        case FigureTypeEnum.rook:
-          availableFields
-              .addAll(getRookPossibleFields(figure.isWhite, figure.field));
-          break;
-        case FigureTypeEnum.bishop:
-          availableFields
-              .addAll(getBishopPossibleFields(figure.isWhite, figure.field));
-        case FigureTypeEnum.knight:
-          availableFields
-              .addAll(getKnightPossibleFields(figure.isWhite, figure.field));
-        case FigureTypeEnum.queen:
-          availableFields
-              .addAll(getQueenPossibleFields(figure.isWhite, figure.field));
-        case FigureTypeEnum.king:
-          availableFields
-              .addAll(getKingPossibleFields(figure.isWhite, figure.field));
-        default:
-      }
-      availableFields.where((element) => element >= 0).toList();
       emit(
         state.copyWith(
-          availableFieldsToMove: availableFields
+          figuresOnBoard: allFigures,
+        ),
+      );
+    });
+    on<_GetAvailableFieldsToMove>((event, emit) {
+      List<int> availableFieldsToMove = [];
+      List<int> availableFieldsToAttack = [];
+      List<int> availableFieldsToAttackWithFigures = [];
+      if (event.figure == null) return;
+      final figure = event.figure!;
+      switch (figure.figureType) {
+        case FigureTypeEnum.pawn:
+          availableFieldsToMove.addAll(
+              getPawnPossibleFieldsToMove(figure.isWhite, figure.field));
+          availableFieldsToAttack.addAll(
+              getPawnPossibleFieldsToAttack(figure.isWhite, figure.field));
+
+          break;
+        case FigureTypeEnum.rook:
+          availableFieldsToMove.addAll(getRookPossibleFields(
+            figure.isWhite,
+            figure.field,
+          ));
+          break;
+        case FigureTypeEnum.bishop:
+          availableFieldsToMove
+              .addAll(getBishopPossibleFields(figure.isWhite, figure.field));
+          break;
+        case FigureTypeEnum.knight:
+          availableFieldsToMove
+              .addAll(getKnightPossibleFields(figure.isWhite, figure.field));
+          break;
+        case FigureTypeEnum.queen:
+          availableFieldsToMove
+              .addAll(getQueenPossibleFields(figure.isWhite, figure.field));
+          break;
+        case FigureTypeEnum.king:
+          availableFieldsToMove
+              .addAll(getKingPossibleFields(figure.isWhite, figure.field));
+          break;
+      }
+      if (availableFieldsToAttack.isEmpty) {
+        availableFieldsToAttack = availableFieldsToMove;
+      }
+      final figuresWithOpositeColor = state.figuresOnBoard
+          .where((element) => element.isWhite != figure.isWhite)
+          .toList();
+      final fieldsWithFiguresWithOpositeColor =
+          figuresWithOpositeColor.map((e) => e.field).toList();
+      availableFieldsToAttackWithFigures = availableFieldsToAttack
+          .where(
+              (element) => fieldsWithFiguresWithOpositeColor.contains(element))
+          .toList();
+
+      final availableFieldsToMoveWithoutFiguresToAttack = availableFieldsToMove
+          .where(
+              (element) => !fieldsWithFiguresWithOpositeColor.contains(element))
+          .toList();
+      emit(
+        state.copyWith(
+          availableFieldsToMove: availableFieldsToMoveWithoutFiguresToAttack
               .where((element) => element >= 0 || element <= 63)
               .toList(),
-          currentlyClickedField: figure.field,
+          fieldsWithFiguresAvailableToTake: availableFieldsToAttackWithFigures,
+          currentlyClickedFigure: figure,
+          gameState: StateEnum.possibleMovesShowed,
+        ),
+      );
+    });
+    on<_MoveFigure>((event, emit) {
+      final Figure fig = event.figure;
+      final int newPosition = event.newPosition;
+
+      final figuresWithoutCurrentFig = [...state.figuresOnBoard]..remove(fig);
+      final updatedFiguresPositions = figuresWithoutCurrentFig
+        ..add(fig.copyWith(field: newPosition));
+      emit(
+        state.copyWith(
+          figuresOnBoard: updatedFiguresPositions,
+          gameState: StateEnum.nothingClicked,
+          availableFieldsToMove: [],
+          currentlyClickedFigure: null,
         ),
       );
     });
   }
+
   List<int> getRookPossibleFields(bool isWhite, int currentPosition) {
     final List<int> possibleMoves = [];
     for (var i = 0; i < 64; i++) {
-      if (i % 8 == currentPosition % 8 && i != currentPosition) {
+      if (i % 8 == currentPosition % 8 &&
+          i != currentPosition &&
+          state.figuresOnBoard
+              .where(
+                  (element) => element.field == i && element.isWhite == isWhite)
+              .isEmpty) {
         possibleMoves.add(i);
       }
-      if (i ~/ 8 == currentPosition ~/ 8 && i != currentPosition) {
+      if (i ~/ 8 == currentPosition ~/ 8 &&
+          i != currentPosition &&
+          state.figuresOnBoard
+              .where(
+                  (element) => element.field == i && element.isWhite == isWhite)
+              .isEmpty) {
         possibleMoves.add(i);
       }
     }
     return possibleMoves;
+  }
+
+  List<int> getPawnPossibleFieldsToMove(bool isWhite, int currentPosition) {
+    if (currentPosition <= 55 && currentPosition >= 48 && isWhite) {
+      return [currentPosition - 8, currentPosition - 16];
+    } else if (currentPosition <= 15 && currentPosition >= 8 && !isWhite) {
+      return [currentPosition + 8, currentPosition + 16];
+    }
+    return isWhite ? [currentPosition - 8] : [currentPosition + 8];
+  }
+
+  List<int> getPawnPossibleFieldsToAttack(bool isWhite, int currentPosition) {
+    final List<int> possibleMovesWithAttack = [];
+    if (isWhite) {
+      possibleMovesWithAttack
+          .addAll([currentPosition - 7, currentPosition - 9]);
+    } else {
+      possibleMovesWithAttack
+          .addAll([currentPosition + 7, currentPosition + 9]);
+    }
+    return possibleMovesWithAttack
+        .where((element) => (element ~/ 8 - currentPosition ~/ 8).abs() == 1)
+        .toList();
   }
 
   List<int> getBishopPossibleFields(bool isWhite, int currentPosition) {

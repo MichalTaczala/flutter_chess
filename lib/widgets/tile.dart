@@ -7,6 +7,7 @@ class Tile extends StatelessWidget {
   final Figure? figure;
   final bool? isFieldAvailableToMove;
   final bool isCurrentlyClicked;
+  final bool isUnderAttack;
   const Tile({
     super.key,
     required this.isBlack,
@@ -14,6 +15,7 @@ class Tile extends StatelessWidget {
     this.figure,
     this.isFieldAvailableToMove,
     this.isCurrentlyClicked = false,
+    this.isUnderAttack = false,
   });
 
   @override
@@ -22,11 +24,13 @@ class Tile extends StatelessWidget {
       decoration: BoxDecoration(
         color: isCurrentlyClicked
             ? Colors.amber
-            : isFieldAvailableToMove == true
-                ? Colors.green
-                : isBlack
-                    ? const Color.fromARGB(255, 82, 82, 82)
-                    : const Color.fromARGB(255, 227, 227, 227),
+            : isUnderAttack
+                ? Colors.red
+                : isFieldAvailableToMove == true
+                    ? Colors.green
+                    : isBlack
+                        ? const Color.fromARGB(255, 82, 82, 82)
+                        : const Color.fromARGB(255, 227, 227, 227),
       ),
       // color: Colors.red),
       child: Text(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chess/bloc/chess_board_bloc.dart';
+import 'package:flutter_chess/enums/state_enum.dart';
 import 'package:flutter_chess/models/figure.dart';
 import 'package:flutter_chess/widgets/tile.dart';
 
@@ -30,8 +31,17 @@ class _ChessViewState extends State<ChessView> {
     context.read<ChessBoardBloc>().add(const ChessBoardEvent.initialize());
   }
 
-  void handleFigureClick(Figure? fig) {
-    if (fig == null) return;
+  void handleFigureClick(Figure? fig, int index) {
+    final bloc = context.read<ChessBoardBloc>();
+
+    if (fig == null && bloc.state.currentlyClickedFigure == null) return;
+
+    if (bloc.state.gameState == StateEnum.possibleMovesShowed &&
+        bloc.state.availableFieldsToMove.contains(index)) {
+      bloc.add(ChessBoardEvent.moveFigure(
+          bloc.state.currentlyClickedFigure!, index));
+      return;
+    }
     context
         .read<ChessBoardBloc>()
         .add(ChessBoardEvent.getAvailableFieldsToMove(fig));
@@ -50,7 +60,8 @@ class _ChessViewState extends State<ChessView> {
                   const Center(
                     child: Text(
                       "The Chess Game",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                     ),
                   ),
                   const SizedBox(
@@ -68,7 +79,7 @@ class _ChessViewState extends State<ChessView> {
                             .toList()
                             .firstOrNull;
                         return InkWell(
-                          onTap: () => handleFigureClick(figNullable),
+                          onTap: () => handleFigureClick(figNullable, index),
                           child: Tile(
                             isBlack: (index + index ~/ 8) % 2 != 0,
                             index: index,
@@ -78,7 +89,12 @@ class _ChessViewState extends State<ChessView> {
                                 .toList()
                                 .isNotEmpty,
                             isCurrentlyClicked:
-                                state.currentlyClickedField == index,
+                                state.currentlyClickedFigure?.field == index,
+                            isUnderAttack: state
+                                .fieldsWithFiguresAvailableToTake
+                                .where((element) => element == index)
+                                .toList()
+                                .isNotEmpty,
                           ),
                         );
                       },
