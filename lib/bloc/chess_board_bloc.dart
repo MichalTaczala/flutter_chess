@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_chess/enums/figure_type_enum.dart';
 import 'package:flutter_chess/enums/state_enum.dart';
 import 'package:flutter_chess/models/figure.dart';
+import 'package:flutter_chess/utils/get_fields_to_move.dart';
 import 'package:flutter_chess/utils/merge_collections.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -164,27 +165,28 @@ class ChessBoardBloc extends Bloc<ChessBoardEvent, ChessBoardState> {
       switch (figure.figureType) {
         case FigureTypeEnum.pawn:
           availableFieldsToMove.addAll(
-              getPawnPossibleFieldsToMove(figure.isWhite, figure.field));
+              getPawnPossibleFieldsToMove(figure.isWhite, figure.field, state));
           availableFieldsToAttack.addAll(
               getPawnPossibleFieldsToAttack(figure.isWhite, figure.field));
-
           break;
         case FigureTypeEnum.rook:
           final Map<String, List<int>> map = mergeStringListMaps<int>([
             getAvailableTiles((newPosition) => newPosition + 8, (x) => x >= 64,
-                figure.field, figure.isWhite),
+                figure.field, figure.isWhite, state),
             getAvailableTiles((newPosition) => newPosition - 8, (x) => x < 0,
-                figure.field, figure.isWhite),
+                figure.field, figure.isWhite, state),
             getAvailableTiles(
                 (newPosition) => newPosition + 1,
                 (x) => x ~/ 8 != figure.field ~/ 8,
                 figure.field,
-                figure.isWhite),
+                figure.isWhite,
+                state),
             getAvailableTiles(
                 (newPosition) => newPosition - 1,
                 (x) => x ~/ 8 != figure.field ~/ 8,
                 figure.field,
-                figure.isWhite),
+                figure.isWhite,
+                state),
           ], [
             "fieldsToGo",
             "fieldsToAttack",
@@ -201,7 +203,7 @@ class ChessBoardBloc extends Bloc<ChessBoardEvent, ChessBoardState> {
               collumnDifference = (x % 8 - figure.field % 8).abs();
               if (rowDifference != collumnDifference) return true;
               return false;
-            }, figure.field, figure.isWhite),
+            }, figure.field, figure.isWhite, state),
             getAvailableTiles((newPosition) => newPosition - 7, (int x) {
               int rowDifference = 0;
               int collumnDifference = 0;
@@ -209,7 +211,7 @@ class ChessBoardBloc extends Bloc<ChessBoardEvent, ChessBoardState> {
               collumnDifference = (x % 8 - figure.field % 8).abs();
               if (rowDifference != collumnDifference) return true;
               return false;
-            }, figure.field, figure.isWhite),
+            }, figure.field, figure.isWhite, state),
             getAvailableTiles((newPosition) => newPosition + 7, (int x) {
               int rowDifference = 0;
               int collumnDifference = 0;
@@ -217,7 +219,7 @@ class ChessBoardBloc extends Bloc<ChessBoardEvent, ChessBoardState> {
               collumnDifference = (x % 8 - figure.field % 8).abs();
               if (rowDifference != collumnDifference) return true;
               return false;
-            }, figure.field, figure.isWhite),
+            }, figure.field, figure.isWhite, state),
             getAvailableTiles((newPosition) => newPosition - 9, (int x) {
               int rowDifference = 0;
               int collumnDifference = 0;
@@ -225,7 +227,7 @@ class ChessBoardBloc extends Bloc<ChessBoardEvent, ChessBoardState> {
               collumnDifference = (x % 8 - figure.field % 8).abs();
               if (rowDifference != collumnDifference) return true;
               return false;
-            }, figure.field, figure.isWhite),
+            }, figure.field, figure.isWhite, state),
           ], [
             "fieldsToGo",
             "fieldsToAttack",
@@ -235,7 +237,7 @@ class ChessBoardBloc extends Bloc<ChessBoardEvent, ChessBoardState> {
           break;
         case FigureTypeEnum.knight:
           final Map<String, List<int>> map =
-              getAvailableTilesForKnight(figure.field, figure.isWhite);
+              getAvailableTilesForKnight(figure.field, figure.isWhite, state);
           availableFieldsToMove = map["fieldsToGo"]!;
           availableFieldsToAttack = map["fieldsToAttack"]!;
           break;
@@ -249,7 +251,7 @@ class ChessBoardBloc extends Bloc<ChessBoardEvent, ChessBoardState> {
               collumnDifference = (x % 8 - figure.field % 8).abs();
               if (rowDifference != collumnDifference) return true;
               return false;
-            }, figure.field, figure.isWhite),
+            }, figure.field, figure.isWhite, state),
             getAvailableTiles((newPosition) => newPosition - 7, (int x) {
               int rowDifference = 0;
               int collumnDifference = 0;
@@ -257,7 +259,7 @@ class ChessBoardBloc extends Bloc<ChessBoardEvent, ChessBoardState> {
               collumnDifference = (x % 8 - figure.field % 8).abs();
               if (rowDifference != collumnDifference) return true;
               return false;
-            }, figure.field, figure.isWhite),
+            }, figure.field, figure.isWhite, state),
             getAvailableTiles((newPosition) => newPosition + 7, (int x) {
               int rowDifference = 0;
               int collumnDifference = 0;
@@ -265,7 +267,7 @@ class ChessBoardBloc extends Bloc<ChessBoardEvent, ChessBoardState> {
               collumnDifference = (x % 8 - figure.field % 8).abs();
               if (rowDifference != collumnDifference) return true;
               return false;
-            }, figure.field, figure.isWhite),
+            }, figure.field, figure.isWhite, state),
             getAvailableTiles((newPosition) => newPosition - 9, (int x) {
               int rowDifference = 0;
               int collumnDifference = 0;
@@ -273,7 +275,7 @@ class ChessBoardBloc extends Bloc<ChessBoardEvent, ChessBoardState> {
               collumnDifference = (x % 8 - figure.field % 8).abs();
               if (rowDifference != collumnDifference) return true;
               return false;
-            }, figure.field, figure.isWhite),
+            }, figure.field, figure.isWhite, state),
           ], [
             "fieldsToGo",
             "fieldsToAttack",
@@ -281,19 +283,21 @@ class ChessBoardBloc extends Bloc<ChessBoardEvent, ChessBoardState> {
           final Map<String, List<int>> mapWithRookFields =
               mergeStringListMaps<int>([
             getAvailableTiles((newPosition) => newPosition + 8, (x) => x >= 64,
-                figure.field, figure.isWhite),
+                figure.field, figure.isWhite, state),
             getAvailableTiles((newPosition) => newPosition - 8, (x) => x < 0,
-                figure.field, figure.isWhite),
+                figure.field, figure.isWhite, state),
             getAvailableTiles(
                 (newPosition) => newPosition + 1,
                 (x) => x ~/ 8 != figure.field ~/ 8,
                 figure.field,
-                figure.isWhite),
+                figure.isWhite,
+                state),
             getAvailableTiles(
                 (newPosition) => newPosition - 1,
                 (x) => x ~/ 8 != figure.field ~/ 8,
                 figure.field,
-                figure.isWhite),
+                figure.isWhite,
+                state),
           ], [
             "fieldsToGo",
             "fieldsToAttack",
@@ -304,7 +308,8 @@ class ChessBoardBloc extends Bloc<ChessBoardEvent, ChessBoardState> {
           availableFieldsToAttack.addAll(mapWithRookFields["fieldsToAttack"]!);
           break;
         case FigureTypeEnum.king:
-          final map = getKingPossibleFields(figure.isWhite, figure.field);
+          final map =
+              getKingPossibleFields(figure.isWhite, figure.field, state);
           availableFieldsToMove = map["fieldsToGo"]!;
           availableFieldsToAttack = map["fieldsToAttack"]!;
           break;
@@ -380,193 +385,5 @@ class ChessBoardBloc extends Bloc<ChessBoardEvent, ChessBoardState> {
         ),
       );
     });
-  }
-
-  List<int> getRookPossibleFields(bool isWhite, int currentPosition) {
-    final List<int> possibleMoves = [];
-    for (var i = 0; i < 64; i++) {
-      if (i % 8 == currentPosition % 8 &&
-          i != currentPosition &&
-          state.figuresOnBoard
-              .where(
-                  (element) => element.field == i && element.isWhite == isWhite)
-              .isEmpty) {
-        possibleMoves.add(i);
-      }
-      if (i ~/ 8 == currentPosition ~/ 8 &&
-          i != currentPosition &&
-          state.figuresOnBoard
-              .where(
-                  (element) => element.field == i && element.isWhite == isWhite)
-              .isEmpty) {
-        possibleMoves.add(i);
-      }
-    }
-    return possibleMoves;
-  }
-
-  List<int> getPawnPossibleFieldsToMove(bool isWhite, int currentPosition) {
-    List<int> possibleFieldsWithoutBoardChessPieces = [];
-    possibleFieldsWithoutBoardChessPieces =
-        isWhite ? [currentPosition - 8] : [currentPosition + 8];
-
-    final filteredPositions = possibleFieldsWithoutBoardChessPieces
-        .where((element) =>
-            !state.figuresOnBoard.map((e) => e.field).contains(element))
-        .toList();
-
-    if (filteredPositions.length == 1) {
-      if (filteredPositions[0] <= 47 && filteredPositions[0] >= 40 && isWhite) {
-        filteredPositions.add(filteredPositions[0] - 8);
-      }
-      if (filteredPositions[0] <= 23 &&
-          filteredPositions[0] >= 16 &&
-          !isWhite) {
-        filteredPositions.add(filteredPositions[0] + 8);
-      }
-    }
-    return filteredPositions;
-  }
-
-  List<int> getPawnPossibleFieldsToAttack(bool isWhite, int currentPosition) {
-    final List<int> possibleMovesWithAttack = [];
-    if (isWhite) {
-      possibleMovesWithAttack
-          .addAll([currentPosition - 7, currentPosition - 9]);
-    } else {
-      possibleMovesWithAttack
-          .addAll([currentPosition + 7, currentPosition + 9]);
-    }
-    return possibleMovesWithAttack
-        .where((element) => (element ~/ 8 - currentPosition ~/ 8).abs() == 1)
-        .toList();
-  }
-
-  List<int> getBishopPossibleFields(bool isWhite, int currentPosition) {
-    final List<int> possibleMoves = [];
-    int rowDifference = 0;
-    int collumnDifference = 0;
-    for (var i = 0; i < 64; i++) {
-      rowDifference = (i ~/ 8 - currentPosition ~/ 8).abs();
-      collumnDifference = (i % 8 - currentPosition % 8).abs();
-
-      if (rowDifference == collumnDifference && i != currentPosition) {
-        possibleMoves.add(i);
-      }
-    }
-    return possibleMoves;
-  }
-
-  List<int> getKnightPossibleFields(bool isWhite, int currentPosition) {
-    final List<int> possibleMoves = [];
-    int rowDifference = 0;
-    int collumnDifference = 0;
-    for (var i = 0; i < 64; i++) {
-      rowDifference = (i ~/ 8 - currentPosition ~/ 8).abs();
-      collumnDifference = (i % 8 - currentPosition % 8).abs();
-
-      if (rowDifference + collumnDifference == 3 &&
-          (rowDifference == 2 || collumnDifference == 2) &&
-          i != currentPosition) {
-        possibleMoves.add(i);
-      }
-    }
-    return possibleMoves;
-  }
-
-  // List<int> getQueenPossibleFields(bool isWhite, int currentPosition) {
-  //   return [
-  //     ...getBishopPossibleFields(isWhite, currentPosition),
-  //     ...getRookPossibleFields(isWhite, currentPosition)
-  //   ];
-  // }
-
-  Map<String, List<int>> getKingPossibleFields(
-      bool isWhite, int currentPosition) {
-    final List<int> possibleMovesToMove = [];
-    final List<int> possibleMovesToAttack = [];
-    int rowDifference = 0;
-    int collumnDifference = 0;
-    for (var i = 0; i < 64; i++) {
-      rowDifference = (i ~/ 8 - currentPosition ~/ 8).abs();
-      collumnDifference = (i % 8 - currentPosition % 8).abs();
-
-      if (rowDifference <= 1 &&
-          collumnDifference <= 1 &&
-          i != currentPosition) {
-        if (state.figuresOnBoard.map((e) => e.field).contains(i)) {
-          if (state.figuresOnBoard
-                  .where((element) => element.field == i)
-                  .first
-                  .isWhite ==
-              !isWhite) {
-            possibleMovesToAttack.add(i);
-          }
-        } else {
-          possibleMovesToMove.add(i);
-        }
-      }
-    }
-    return {
-      "fieldsToGo": possibleMovesToMove,
-      "fieldsToAttack": possibleMovesToAttack,
-    };
-  }
-
-  Map<String, List<int>> getAvailableTiles(int Function(int) goToNextItem,
-      Function(int) stopRecursion, int currentPosition, bool isWhite) {
-    final actualCurrentPosition = goToNextItem(currentPosition);
-    final Map<String, List<int>> fields = {
-      "fieldsToGo": [],
-      "fieldsToAttack": []
-    };
-
-    if (stopRecursion(actualCurrentPosition)) {
-      return fields;
-    }
-    if (state.figuresOnBoard
-        .where((element) => element.field == actualCurrentPosition)
-        .isNotEmpty) {
-      if (state.figuresOnBoard
-              .firstWhere((element) => element.field == actualCurrentPosition)
-              .isWhite !=
-          isWhite) {
-        fields["fieldsToAttack"]!.add(actualCurrentPosition);
-      }
-      return fields;
-    }
-    fields["fieldsToGo"]!.add(actualCurrentPosition);
-    final recursiveResult = getAvailableTiles(
-        goToNextItem, stopRecursion, actualCurrentPosition, isWhite);
-    fields["fieldsToGo"]!.addAll(recursiveResult["fieldsToGo"]!);
-    fields["fieldsToAttack"]!.addAll(recursiveResult["fieldsToAttack"]!);
-    return fields;
-  }
-
-  Map<String, List<int>> getAvailableTilesForKnight(
-      int currentPosition, bool isWhite) {
-    final List<int> possiblePositions =
-        getKnightPossibleFields(isWhite, currentPosition);
-    final Map<String, List<int>> fields = {
-      "fieldsToGo": [],
-      "fieldsToAttack": []
-    };
-    final figsOnBoardSimplified =
-        state.figuresOnBoard.map((e) => (e.field, e.isWhite)).toList();
-
-    for (var possiblePosition in possiblePositions) {
-      if (!figsOnBoardSimplified.map((e) => e.$1).contains(possiblePosition)) {
-        fields["fieldsToGo"]!.add(possiblePosition);
-      } else {
-        final differentColorFigure = figsOnBoardSimplified
-            .where((element) =>
-                element.$1 == possiblePosition && element.$2 == !isWhite)
-            .firstOrNull;
-        if (differentColorFigure != null) {
-          fields["fieldsToAttack"]!.add(differentColorFigure.$1);
-        }
-      }
-    }
-    return fields;
   }
 }

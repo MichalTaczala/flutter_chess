@@ -62,6 +62,64 @@ class _ChessViewState extends State<ChessView> {
         .add(ChessBoardEvent.getAvailableFieldsToMove(fig));
   }
 
+  Widget _buildBoardSection() {
+    return BlocBuilder<ChessBoardBloc, ChessBoardState>(
+      builder: (context, state) {
+        return GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 8, childAspectRatio: 1),
+          itemCount: 64,
+          itemBuilder: (context, index) {
+            Figure? figNullable = state.figuresOnBoard
+                .where((element) => element.field == index)
+                .toList()
+                .firstOrNull;
+            return InkWell(
+              onTap: () => handleFigureClick(figNullable, index),
+              child: Tile(
+                isBlack: (index + index ~/ 8) % 2 != 0,
+                index: index,
+                figure: figNullable,
+                isFieldAvailableToMove: state.availableFieldsToMove
+                    .where((element) => element == index)
+                    .toList()
+                    .isNotEmpty,
+                isCurrentlyClicked:
+                    state.currentlyClickedFigure?.field == index,
+                isUnderAttack: state.fieldsWithFiguresAvailableToTake
+                    .where((element) => element == index)
+                    .toList()
+                    .isNotEmpty,
+              ),
+            );
+          },
+          physics: const NeverScrollableScrollPhysics(),
+        );
+      },
+    );
+  }
+
+  Widget _buildPlayerTurnIndicatorSection() {
+    return BlocBuilder<ChessBoardBloc, ChessBoardState>(
+      builder: (context, state) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text("Time to move for"),
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                border: Border.all(width: 1, color: Colors.black),
+                color: state.isWhitePlayerTurn ? Colors.white : Colors.black,
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ChessBoardBloc, ChessBoardState>(
@@ -82,58 +140,10 @@ class _ChessViewState extends State<ChessView> {
                   const SizedBox(
                     height: 32,
                   ),
-                  Expanded(
-                    child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 8, childAspectRatio: 1),
-                      itemCount: 64,
-                      itemBuilder: (context, index) {
-                        Figure? figNullable = state.figuresOnBoard
-                            .where((element) => element.field == index)
-                            .toList()
-                            .firstOrNull;
-                        return InkWell(
-                          onTap: () => handleFigureClick(figNullable, index),
-                          child: Tile(
-                            isBlack: (index + index ~/ 8) % 2 != 0,
-                            index: index,
-                            figure: figNullable,
-                            isFieldAvailableToMove: state.availableFieldsToMove
-                                .where((element) => element == index)
-                                .toList()
-                                .isNotEmpty,
-                            isCurrentlyClicked:
-                                state.currentlyClickedFigure?.field == index,
-                            isUnderAttack: state
-                                .fieldsWithFiguresAvailableToTake
-                                .where((element) => element == index)
-                                .toList()
-                                .isNotEmpty,
-                          ),
-                        );
-                      },
-                      physics: const NeverScrollableScrollPhysics(),
-                    ),
-                  ),
+                  Expanded(child: _buildBoardSection()),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text("Time to move for"),
-                        Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 1, color: Colors.black),
-                            color: state.isWhitePlayerTurn
-                                ? Colors.white
-                                : Colors.black,
-                          ),
-                        )
-                      ],
-                    ),
+                    child: _buildPlayerTurnIndicatorSection(),
                   ),
                   Text("Figures taken:${state.figuresTaken}")
                 ],
