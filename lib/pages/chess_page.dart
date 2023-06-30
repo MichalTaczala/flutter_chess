@@ -116,6 +116,25 @@ class _ChessViewState extends State<ChessView> {
                       physics: const NeverScrollableScrollPhysics(),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text("Time to move for"),
+                        Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1, color: Colors.black),
+                            color: state.isWhitePlayerTurn
+                                ? Colors.white
+                                : Colors.black,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                   Text("Figures taken:${state.figuresTaken}")
                 ],
               ),
