@@ -33,16 +33,18 @@ class _ChessViewState extends State<ChessView> {
 
   void handleFigureClick(Figure? fig, int index) {
     final bloc = context.read<ChessBoardBloc>();
+    if (fig == null && bloc.state.currentlyClickedFigure == null) return;
+
     if (fig?.isWhite != bloc.state.isWhitePlayerTurn &&
         bloc.state.gameState == StateEnum.nothingClicked) {
       return;
     }
     if (fig?.isWhite == !bloc.state.isWhitePlayerTurn &&
-        bloc.state.gameState == StateEnum.possibleMovesShowed) {
+        bloc.state.gameState == StateEnum.possibleMovesShowed &&
+        !bloc.state.fieldsWithFiguresAvailableToTake.contains(fig?.field)) {
       return;
     }
 
-    if (fig == null && bloc.state.currentlyClickedFigure == null) return;
     if (bloc.state.currentlyClickedFigure?.field == index &&
         bloc.state.gameState == StateEnum.possibleMovesShowed) {
       bloc.add(const ChessBoardEvent.uncheckFigure());
