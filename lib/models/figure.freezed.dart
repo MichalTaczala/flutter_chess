@@ -108,9 +108,10 @@ class __$$_FigureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Figure implements _Figure {
+class _$_Figure extends _Figure {
   const _$_Figure(
-      {required this.isWhite, required this.figureType, required this.field});
+      {required this.isWhite, required this.figureType, required this.field})
+      : super._();
 
   @override
   final bool isWhite;
@@ -118,11 +119,6 @@ class _$_Figure implements _Figure {
   final FigureTypeEnum figureType;
   @override
   final int field;
-
-  @override
-  String toString() {
-    return 'Figure(isWhite: $isWhite, figureType: $figureType, field: $field)';
-  }
 
   @override
   bool operator ==(dynamic other) {
@@ -145,11 +141,12 @@ class _$_Figure implements _Figure {
       __$$_FigureCopyWithImpl<_$_Figure>(this, _$identity);
 }
 
-abstract class _Figure implements Figure {
+abstract class _Figure extends Figure {
   const factory _Figure(
       {required final bool isWhite,
       required final FigureTypeEnum figureType,
       required final int field}) = _$_Figure;
+  const _Figure._() : super._();
 
   @override
   bool get isWhite;

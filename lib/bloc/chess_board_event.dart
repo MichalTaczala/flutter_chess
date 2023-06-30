@@ -7,4 +7,5 @@ class ChessBoardEvent with _$ChessBoardEvent {
       _GetAvailableFieldsToMove;
   const factory ChessBoardEvent.moveFigure(Figure figure, int newPosition) =
       _MoveFigure;
+  const factory ChessBoardEvent.uncheckFigure() = _UncheckFigure;
 }

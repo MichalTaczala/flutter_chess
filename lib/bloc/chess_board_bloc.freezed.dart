@@ -21,6 +21,7 @@ mixin _$ChessBoardEvent {
     required TResult Function() initialize,
     required TResult Function(Figure? figure) getAvailableFieldsToMove,
     required TResult Function(Figure figure, int newPosition) moveFigure,
+    required TResult Function() uncheckFigure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -28,6 +29,7 @@ mixin _$ChessBoardEvent {
     TResult? Function()? initialize,
     TResult? Function(Figure? figure)? getAvailableFieldsToMove,
     TResult? Function(Figure figure, int newPosition)? moveFigure,
+    TResult? Function()? uncheckFigure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -35,6 +37,7 @@ mixin _$ChessBoardEvent {
     TResult Function()? initialize,
     TResult Function(Figure? figure)? getAvailableFieldsToMove,
     TResult Function(Figure figure, int newPosition)? moveFigure,
+    TResult Function()? uncheckFigure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -44,6 +47,7 @@ mixin _$ChessBoardEvent {
     required TResult Function(_GetAvailableFieldsToMove value)
         getAvailableFieldsToMove,
     required TResult Function(_MoveFigure value) moveFigure,
+    required TResult Function(_UncheckFigure value) uncheckFigure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -52,6 +56,7 @@ mixin _$ChessBoardEvent {
     TResult? Function(_GetAvailableFieldsToMove value)?
         getAvailableFieldsToMove,
     TResult? Function(_MoveFigure value)? moveFigure,
+    TResult? Function(_UncheckFigure value)? uncheckFigure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -59,6 +64,7 @@ mixin _$ChessBoardEvent {
     TResult Function(_Initialize value)? initialize,
     TResult Function(_GetAvailableFieldsToMove value)? getAvailableFieldsToMove,
     TResult Function(_MoveFigure value)? moveFigure,
+    TResult Function(_UncheckFigure value)? uncheckFigure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -123,6 +129,7 @@ class _$_Initialize implements _Initialize {
     required TResult Function() initialize,
     required TResult Function(Figure? figure) getAvailableFieldsToMove,
     required TResult Function(Figure figure, int newPosition) moveFigure,
+    required TResult Function() uncheckFigure,
   }) {
     return initialize();
   }
@@ -133,6 +140,7 @@ class _$_Initialize implements _Initialize {
     TResult? Function()? initialize,
     TResult? Function(Figure? figure)? getAvailableFieldsToMove,
     TResult? Function(Figure figure, int newPosition)? moveFigure,
+    TResult? Function()? uncheckFigure,
   }) {
     return initialize?.call();
   }
@@ -143,6 +151,7 @@ class _$_Initialize implements _Initialize {
     TResult Function()? initialize,
     TResult Function(Figure? figure)? getAvailableFieldsToMove,
     TResult Function(Figure figure, int newPosition)? moveFigure,
+    TResult Function()? uncheckFigure,
     required TResult orElse(),
   }) {
     if (initialize != null) {
@@ -158,6 +167,7 @@ class _$_Initialize implements _Initialize {
     required TResult Function(_GetAvailableFieldsToMove value)
         getAvailableFieldsToMove,
     required TResult Function(_MoveFigure value) moveFigure,
+    required TResult Function(_UncheckFigure value) uncheckFigure,
   }) {
     return initialize(this);
   }
@@ -169,6 +179,7 @@ class _$_Initialize implements _Initialize {
     TResult? Function(_GetAvailableFieldsToMove value)?
         getAvailableFieldsToMove,
     TResult? Function(_MoveFigure value)? moveFigure,
+    TResult? Function(_UncheckFigure value)? uncheckFigure,
   }) {
     return initialize?.call(this);
   }
@@ -179,6 +190,7 @@ class _$_Initialize implements _Initialize {
     TResult Function(_Initialize value)? initialize,
     TResult Function(_GetAvailableFieldsToMove value)? getAvailableFieldsToMove,
     TResult Function(_MoveFigure value)? moveFigure,
+    TResult Function(_UncheckFigure value)? uncheckFigure,
     required TResult orElse(),
   }) {
     if (initialize != null) {
@@ -275,6 +287,7 @@ class _$_GetAvailableFieldsToMove implements _GetAvailableFieldsToMove {
     required TResult Function() initialize,
     required TResult Function(Figure? figure) getAvailableFieldsToMove,
     required TResult Function(Figure figure, int newPosition) moveFigure,
+    required TResult Function() uncheckFigure,
   }) {
     return getAvailableFieldsToMove(figure);
   }
@@ -285,6 +298,7 @@ class _$_GetAvailableFieldsToMove implements _GetAvailableFieldsToMove {
     TResult? Function()? initialize,
     TResult? Function(Figure? figure)? getAvailableFieldsToMove,
     TResult? Function(Figure figure, int newPosition)? moveFigure,
+    TResult? Function()? uncheckFigure,
   }) {
     return getAvailableFieldsToMove?.call(figure);
   }
@@ -295,6 +309,7 @@ class _$_GetAvailableFieldsToMove implements _GetAvailableFieldsToMove {
     TResult Function()? initialize,
     TResult Function(Figure? figure)? getAvailableFieldsToMove,
     TResult Function(Figure figure, int newPosition)? moveFigure,
+    TResult Function()? uncheckFigure,
     required TResult orElse(),
   }) {
     if (getAvailableFieldsToMove != null) {
@@ -310,6 +325,7 @@ class _$_GetAvailableFieldsToMove implements _GetAvailableFieldsToMove {
     required TResult Function(_GetAvailableFieldsToMove value)
         getAvailableFieldsToMove,
     required TResult Function(_MoveFigure value) moveFigure,
+    required TResult Function(_UncheckFigure value) uncheckFigure,
   }) {
     return getAvailableFieldsToMove(this);
   }
@@ -321,6 +337,7 @@ class _$_GetAvailableFieldsToMove implements _GetAvailableFieldsToMove {
     TResult? Function(_GetAvailableFieldsToMove value)?
         getAvailableFieldsToMove,
     TResult? Function(_MoveFigure value)? moveFigure,
+    TResult? Function(_UncheckFigure value)? uncheckFigure,
   }) {
     return getAvailableFieldsToMove?.call(this);
   }
@@ -331,6 +348,7 @@ class _$_GetAvailableFieldsToMove implements _GetAvailableFieldsToMove {
     TResult Function(_Initialize value)? initialize,
     TResult Function(_GetAvailableFieldsToMove value)? getAvailableFieldsToMove,
     TResult Function(_MoveFigure value)? moveFigure,
+    TResult Function(_UncheckFigure value)? uncheckFigure,
     required TResult orElse(),
   }) {
     if (getAvailableFieldsToMove != null) {
@@ -436,6 +454,7 @@ class _$_MoveFigure implements _MoveFigure {
     required TResult Function() initialize,
     required TResult Function(Figure? figure) getAvailableFieldsToMove,
     required TResult Function(Figure figure, int newPosition) moveFigure,
+    required TResult Function() uncheckFigure,
   }) {
     return moveFigure(figure, newPosition);
   }
@@ -446,6 +465,7 @@ class _$_MoveFigure implements _MoveFigure {
     TResult? Function()? initialize,
     TResult? Function(Figure? figure)? getAvailableFieldsToMove,
     TResult? Function(Figure figure, int newPosition)? moveFigure,
+    TResult? Function()? uncheckFigure,
   }) {
     return moveFigure?.call(figure, newPosition);
   }
@@ -456,6 +476,7 @@ class _$_MoveFigure implements _MoveFigure {
     TResult Function()? initialize,
     TResult Function(Figure? figure)? getAvailableFieldsToMove,
     TResult Function(Figure figure, int newPosition)? moveFigure,
+    TResult Function()? uncheckFigure,
     required TResult orElse(),
   }) {
     if (moveFigure != null) {
@@ -471,6 +492,7 @@ class _$_MoveFigure implements _MoveFigure {
     required TResult Function(_GetAvailableFieldsToMove value)
         getAvailableFieldsToMove,
     required TResult Function(_MoveFigure value) moveFigure,
+    required TResult Function(_UncheckFigure value) uncheckFigure,
   }) {
     return moveFigure(this);
   }
@@ -482,6 +504,7 @@ class _$_MoveFigure implements _MoveFigure {
     TResult? Function(_GetAvailableFieldsToMove value)?
         getAvailableFieldsToMove,
     TResult? Function(_MoveFigure value)? moveFigure,
+    TResult? Function(_UncheckFigure value)? uncheckFigure,
   }) {
     return moveFigure?.call(this);
   }
@@ -492,6 +515,7 @@ class _$_MoveFigure implements _MoveFigure {
     TResult Function(_Initialize value)? initialize,
     TResult Function(_GetAvailableFieldsToMove value)? getAvailableFieldsToMove,
     TResult Function(_MoveFigure value)? moveFigure,
+    TResult Function(_UncheckFigure value)? uncheckFigure,
     required TResult orElse(),
   }) {
     if (moveFigure != null) {
@@ -510,6 +534,122 @@ abstract class _MoveFigure implements ChessBoardEvent {
   @JsonKey(ignore: true)
   _$$_MoveFigureCopyWith<_$_MoveFigure> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_UncheckFigureCopyWith<$Res> {
+  factory _$$_UncheckFigureCopyWith(
+          _$_UncheckFigure value, $Res Function(_$_UncheckFigure) then) =
+      __$$_UncheckFigureCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_UncheckFigureCopyWithImpl<$Res>
+    extends _$ChessBoardEventCopyWithImpl<$Res, _$_UncheckFigure>
+    implements _$$_UncheckFigureCopyWith<$Res> {
+  __$$_UncheckFigureCopyWithImpl(
+      _$_UncheckFigure _value, $Res Function(_$_UncheckFigure) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_UncheckFigure implements _UncheckFigure {
+  const _$_UncheckFigure();
+
+  @override
+  String toString() {
+    return 'ChessBoardEvent.uncheckFigure()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_UncheckFigure);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialize,
+    required TResult Function(Figure? figure) getAvailableFieldsToMove,
+    required TResult Function(Figure figure, int newPosition) moveFigure,
+    required TResult Function() uncheckFigure,
+  }) {
+    return uncheckFigure();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialize,
+    TResult? Function(Figure? figure)? getAvailableFieldsToMove,
+    TResult? Function(Figure figure, int newPosition)? moveFigure,
+    TResult? Function()? uncheckFigure,
+  }) {
+    return uncheckFigure?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialize,
+    TResult Function(Figure? figure)? getAvailableFieldsToMove,
+    TResult Function(Figure figure, int newPosition)? moveFigure,
+    TResult Function()? uncheckFigure,
+    required TResult orElse(),
+  }) {
+    if (uncheckFigure != null) {
+      return uncheckFigure();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialize value) initialize,
+    required TResult Function(_GetAvailableFieldsToMove value)
+        getAvailableFieldsToMove,
+    required TResult Function(_MoveFigure value) moveFigure,
+    required TResult Function(_UncheckFigure value) uncheckFigure,
+  }) {
+    return uncheckFigure(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initialize value)? initialize,
+    TResult? Function(_GetAvailableFieldsToMove value)?
+        getAvailableFieldsToMove,
+    TResult? Function(_MoveFigure value)? moveFigure,
+    TResult? Function(_UncheckFigure value)? uncheckFigure,
+  }) {
+    return uncheckFigure?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialize value)? initialize,
+    TResult Function(_GetAvailableFieldsToMove value)? getAvailableFieldsToMove,
+    TResult Function(_MoveFigure value)? moveFigure,
+    TResult Function(_UncheckFigure value)? uncheckFigure,
+    required TResult orElse(),
+  }) {
+    if (uncheckFigure != null) {
+      return uncheckFigure(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UncheckFigure implements ChessBoardEvent {
+  const factory _UncheckFigure() = _$_UncheckFigure;
 }
 
 /// @nodoc

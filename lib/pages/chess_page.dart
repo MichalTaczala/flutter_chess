@@ -33,15 +33,30 @@ class _ChessViewState extends State<ChessView> {
 
   void handleFigureClick(Figure? fig, int index) {
     final bloc = context.read<ChessBoardBloc>();
+    if (fig?.isWhite != bloc.state.isWhitePlayerTurn &&
+        bloc.state.gameState == StateEnum.nothingClicked) {
+      return;
+    }
+    if (fig?.isWhite == !bloc.state.isWhitePlayerTurn &&
+        bloc.state.gameState == StateEnum.possibleMovesShowed) {
+      return;
+    }
 
     if (fig == null && bloc.state.currentlyClickedFigure == null) return;
+    if (bloc.state.currentlyClickedFigure?.field == index &&
+        bloc.state.gameState == StateEnum.possibleMovesShowed) {
+      bloc.add(const ChessBoardEvent.uncheckFigure());
+      return;
+    }
 
     if (bloc.state.gameState == StateEnum.possibleMovesShowed &&
-        bloc.state.availableFieldsToMove.contains(index)) {
+        (bloc.state.availableFieldsToMove.contains(index) ||
+            bloc.state.fieldsWithFiguresAvailableToTake.contains(index))) {
       bloc.add(ChessBoardEvent.moveFigure(
           bloc.state.currentlyClickedFigure!, index));
       return;
     }
+
     context
         .read<ChessBoardBloc>()
         .add(ChessBoardEvent.getAvailableFieldsToMove(fig));
@@ -101,6 +116,7 @@ class _ChessViewState extends State<ChessView> {
                       physics: const NeverScrollableScrollPhysics(),
                     ),
                   ),
+                  Text("Figures taken:${state.figuresTaken}")
                 ],
               ),
             ),
